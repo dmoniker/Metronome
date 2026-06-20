@@ -20,6 +20,8 @@ final class MetronomeViewModel: ObservableObject {
 
     @Published var timeSignature: TimeSignature = .fourFour {
         didSet {
+            tapTempoTracker.reset()
+            tapTempoBeat = nil
             engine.configure(bpm: bpm, beatsPerMeasure: timeSignature.beatsPerMeasure)
         }
     }
@@ -28,13 +30,13 @@ final class MetronomeViewModel: ObservableObject {
         didSet { engine.audioEnabled = audioEnabled }
     }
 
-    @Published var visualEnabled = true
-
     @Published private(set) var isRunning = false
     @Published private(set) var currentBeat = 0
+    @Published private(set) var tapTempoBeat: Int?
     @Published var pulseTrigger = UUID()
 
     let engine = MetronomeEngine()
+    private var tapTempoTracker = TapTempoTracker()
     private var cancellables = Set<AnyCancellable>()
 
     init() {
@@ -69,6 +71,15 @@ final class MetronomeViewModel: ObservableObject {
     func setBPMFromText(_ text: String) {
         guard let value = Int(text.filter(\.isNumber)), value > 0 else { return }
         bpm = Self.clamp(value)
+    }
+
+    func registerTapTempo() {
+        let windowSize = timeSignature.beatsPerMeasure
+        let result = tapTempoTracker.registerTap(windowSize: windowSize)
+        tapTempoBeat = result.tapIndex
+        if let newBPM = result.bpm {
+            bpm = newBPM
+        }
     }
 
     static func clamp(_ value: Int) -> Int {

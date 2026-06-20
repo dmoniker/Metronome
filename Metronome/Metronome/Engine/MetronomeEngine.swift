@@ -11,11 +11,21 @@ final class MetronomeEngine: ObservableObject {
     @Published var pulseTrigger = UUID()
 
     var audioEnabled = true {
-        didSet { if !audioEnabled { stopAudioIfNeeded() } }
+        didSet {
+            if audioEnabled {
+                if isRunning { startAudioIfNeeded() }
+            } else {
+                stopAudioIfNeeded()
+            }
+        }
     }
 
     private let audioEngine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
+    private let sampleRate: Double = 44_100
+    private lazy var audioFormat: AVAudioFormat = {
+        AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1)!
+    }()
     private var accentBuffer: AVAudioPCMBuffer?
     private var regularBuffer: AVAudioPCMBuffer?
 
@@ -79,7 +89,6 @@ final class MetronomeEngine: ObservableObject {
         timer = nil
         beatIndex = 0
         currentBeat = 0
-        stopAudioIfNeeded()
     }
 
     func toggle() {
@@ -142,10 +151,9 @@ final class MetronomeEngine: ObservableObject {
         try? session.setActive(true)
 
         audioEngine.attach(playerNode)
-        let mainMixer = audioEngine.mainMixerNode
-        audioEngine.connect(playerNode, to: mainMixer, format: nil)
+        audioEngine.connect(playerNode, to: audioEngine.mainMixerNode, format: audioFormat)
+        audioEngine.prepare()
 
-        let sampleRate: Double = 44_100
         accentBuffer = makeClickBuffer(
             sampleRate: sampleRate,
             frequency: 880,
@@ -161,24 +169,29 @@ final class MetronomeEngine: ObservableObject {
     }
 
     private func startAudioIfNeeded() {
-        guard audioEnabled, !audioEngine.isRunning else { return }
-        try? audioEngine.start()
-        playerNode.play()
+        guard audioEnabled else { return }
+        ensureAudioRunning()
     }
 
     private func stopAudioIfNeeded() {
         playerNode.stop()
-        if audioEngine.isRunning {
-            audioEngine.stop()
+        audioEngine.stop()
+    }
+
+    private func ensureAudioRunning() {
+        if !audioEngine.isRunning {
+            audioEngine.prepare()
+            try? audioEngine.start()
+        }
+        if !playerNode.isPlaying {
+            playerNode.play()
         }
     }
 
     private func playClick(accent: Bool) {
         guard let buffer = accent ? accentBuffer : regularBuffer else { return }
-        if !audioEngine.isRunning {
-            try? audioEngine.start()
-            playerNode.play()
-        }
+        ensureAudioRunning()
+        guard audioEngine.isRunning, playerNode.isPlaying else { return }
         playerNode.scheduleBuffer(buffer, completionHandler: nil)
     }
 

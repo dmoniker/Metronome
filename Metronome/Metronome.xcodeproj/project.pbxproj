@@ -10,10 +10,11 @@
 		M10000010000000000000001 /* MetronomeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000010000000000000001 /* MetronomeApp.swift */; };
 		M10000020000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000020000000000000002 /* ContentView.swift */; };
 		M10000030000000000000003 /* TimeSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000030000000000000003 /* TimeSignature.swift */; };
+		M10000090000000000000009 /* TapTempoTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000090000000000000009 /* TapTempoTracker.swift */; };
 		M10000040000000000000004 /* MetronomeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000040000000000000004 /* MetronomeEngine.swift */; };
 		M10000050000000000000005 /* MetronomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000050000000000000005 /* MetronomeViewModel.swift */; };
-		M10000060000000000000006 /* TempoDialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000060000000000000006 /* TempoDialView.swift */; };
-		M10000070000000000000007 /* PulseRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000070000000000000007 /* PulseRingView.swift */; };
+		M10000060000000000000006 /* MetronomePulseClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000060000000000000006 /* MetronomePulseClockView.swift */; };
+		M10000070000000000000007 /* TempoSwipeDialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = M20000070000000000000007 /* TempoSwipeDialView.swift */; };
 		M10000080000000000000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = M20000080000000000000008 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -21,10 +22,11 @@
 		M20000010000000000000001 /* MetronomeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeApp.swift; sourceTree = "<group>"; };
 		M20000020000000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		M20000030000000000000003 /* TimeSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSignature.swift; sourceTree = "<group>"; };
+		M20000090000000000000009 /* TapTempoTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapTempoTracker.swift; sourceTree = "<group>"; };
 		M20000040000000000000004 /* MetronomeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeEngine.swift; sourceTree = "<group>"; };
 		M20000050000000000000005 /* MetronomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeViewModel.swift; sourceTree = "<group>"; };
-		M20000060000000000000006 /* TempoDialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoDialView.swift; sourceTree = "<group>"; };
-		M20000070000000000000007 /* PulseRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseRingView.swift; sourceTree = "<group>"; };
+		M20000060000000000000006 /* MetronomePulseClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomePulseClockView.swift; sourceTree = "<group>"; };
+		M20000070000000000000007 /* TempoSwipeDialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoSwipeDialView.swift; sourceTree = "<group>"; };
 		M20000080000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		M2FFFF010000000000000001 /* Metronome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metronome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				M20000030000000000000003 /* TimeSignature.swift */,
+				M20000090000000000000009 /* TapTempoTracker.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -97,8 +100,8 @@
 		M40000070000000000000007 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				M20000060000000000000006 /* TempoDialView.swift */,
-				M20000070000000000000007 /* PulseRingView.swift */,
+				M20000060000000000000006 /* MetronomePulseClockView.swift */,
+				M20000070000000000000007 /* TempoSwipeDialView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -175,10 +178,11 @@
 				M10000010000000000000001 /* MetronomeApp.swift in Sources */,
 				M10000020000000000000002 /* ContentView.swift in Sources */,
 				M10000030000000000000003 /* TimeSignature.swift in Sources */,
+				M10000090000000000000009 /* TapTempoTracker.swift in Sources */,
 				M10000040000000000000004 /* MetronomeEngine.swift in Sources */,
 				M10000050000000000000005 /* MetronomeViewModel.swift in Sources */,
-				M10000060000000000000006 /* TempoDialView.swift in Sources */,
-				M10000070000000000000007 /* PulseRingView.swift in Sources */,
+				M10000060000000000000006 /* MetronomePulseClockView.swift in Sources */,
+				M10000070000000000000007 /* TempoSwipeDialView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +247,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = F34XBU4X46;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Metronome;
@@ -272,7 +276,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = F34XBU4X46;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Metronome;
