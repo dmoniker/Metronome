@@ -1,6 +1,10 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject private var viewModel = MetronomeViewModel()
     @FocusState private var tempoFieldFocused: Bool
     @State private var tempoText = "120"
@@ -28,6 +32,16 @@ struct ContentView: View {
         }
         .onAppear {
             tempoText = "\(viewModel.bpm)"
+        }
+        .onChange(of: scenePhase) { _, phase in
+            #if canImport(UIKit)
+            switch phase {
+            case .active:
+                UIApplication.shared.isIdleTimerDisabled = viewModel.isRunning
+            default:
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
+            #endif
         }
     }
 

@@ -1,5 +1,8 @@
 import AVFoundation
 import Foundation
+#if canImport(UIKit)
+import UIKit
+#endif
 
 @MainActor
 final class MetronomeEngine: ObservableObject {
@@ -33,6 +36,11 @@ final class MetronomeEngine: ObservableObject {
         if audioEngine.isRunning {
             audioEngine.stop()
         }
+        #if canImport(UIKit)
+        DispatchQueue.main.async {
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
+        #endif
     }
 
     func configure(bpm: Int, beatsPerMeasure: Int) {
@@ -53,6 +61,7 @@ final class MetronomeEngine: ObservableObject {
     func start() {
         guard !isRunning else { return }
         isRunning = true
+        setIdleTimerDisabled(true)
         beatIndex = 0
         currentBeat = 0
         tickCount = 0
@@ -65,6 +74,7 @@ final class MetronomeEngine: ObservableObject {
     func stop() {
         guard isRunning else { return }
         isRunning = false
+        setIdleTimerDisabled(false)
         timer?.cancel()
         timer = nil
         beatIndex = 0
@@ -170,6 +180,12 @@ final class MetronomeEngine: ObservableObject {
             playerNode.play()
         }
         playerNode.scheduleBuffer(buffer, completionHandler: nil)
+    }
+
+    private func setIdleTimerDisabled(_ disabled: Bool) {
+        #if canImport(UIKit)
+        UIApplication.shared.isIdleTimerDisabled = disabled
+        #endif
     }
 
     private func makeClickBuffer(
